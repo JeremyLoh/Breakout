@@ -29,6 +29,10 @@ Breakout is an arcade game developed and published by Atari, Inc., and released 
 
 ## Credit for graphics:
 
+Some of the graphics, `hearts.png`, `background.png`, `arrows.png` were made in Aseprite: https://www.aseprite.org/
+
+The remaining graphics were obtained from:
+
 - https://opengameart.org/users/buch
 
 ## Libraries used (in `lib`)
