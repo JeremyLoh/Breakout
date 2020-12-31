@@ -37,7 +37,7 @@ end
 function table.slice(tbl, first, last, step)
     local output = {}
     -- #[TABLE_NAME] gives the size of the table
-    for (i = first or 1), (last or #tbl), (step or 1) do
+    for i = first or 1, last or #tbl, step or 1 do
         output[#output + 1] = tbl[i]
     end
     return output
@@ -56,24 +56,23 @@ function GenerateQuadPaddles(atlas)
 
     paddles = {}
     index = 1
-    atlasDimensions = atlas:getDimensions()
 
     for i = 0, 3 do
         -- Small paddle
-        paddles[index] = love.graphics.newQuad(x, y, 32, 16, atlasDimensions)
+        paddles[index] = love.graphics.newQuad(x, y, 32, 16, atlas:getDimensions())
         index = index + 1
 
         -- Medium paddle
-        paddles[index] = love.graphics.newQuad(x + 32, y, 64, 16, atlasDimensions)
+        paddles[index] = love.graphics.newQuad(x + 32, y, 64, 16, atlas:getDimensions())
         index = index + 1
         
         -- Large paddle
-        paddles[index] = love.graphics.newQuad(x + 32 + 64, y, 96, 16, atlasDimensions)
+        paddles[index] = love.graphics.newQuad(x + 32 + 64, y, 96, 16, atlas:getDimensions())
         index = index + 1
         
         -- Extra large paddle (next row)
         x = 0
-        paddles[index] = love.graphics.newQuad(x, y + 16, 128, 16, atlasDimensions)
+        paddles[index] = love.graphics.newQuad(x, y + 16, 128, 16, atlas:getDimensions())
         index = index + 1
 
         -- For next set of paddles
