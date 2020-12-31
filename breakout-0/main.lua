@@ -20,14 +20,16 @@ require "src/Dependencies"
     Used to setup game objects, variables etc.
 ]]
 function love.load()
+    -- Initialize our virtual resolution, this will be rendered within our 
+    -- actual window regardless of its dimensions
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
         vsync = true,
         resizable = true,
     })
 
-    love.graphics.setDefaultFilter("nearest", "nearest")
     love.window.setTitle("Breakout")
+    love.graphics.setDefaultFilter("nearest", "nearest")
     math.randomseed(os.time())
 
     gFonts = {
@@ -61,7 +63,11 @@ function love.load()
     music:play()
 
     gGraphics = {
-        ["background"] = love.graphics.newImage("graphics/background.png")
+        ["background"] = love.graphics.newImage("graphics/background.png"),
+        ["main"] = love.graphics.newImage("graphics/breakout.png"),
+        ["arrows"] = love.graphics.newImage("graphics/arrows.png"),
+        ["hearts"] = love.graphics.newImage("graphics/hearts.png"),
+        ["particle"] = love.graphics.newImage("graphics/particle.png"),
     }
 
     states = {
