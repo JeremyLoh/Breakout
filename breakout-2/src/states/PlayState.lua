@@ -11,6 +11,10 @@ PlayState = Class{__includes = BaseState}
 function PlayState:init()
     self.paused = false
     self.paddle = Paddle()
+    self.ball = Ball(1)
+    -- Give ball random velocity
+    self.ball.dx = math.random(-200, 200)
+    self.ball.dy = math.random(-70, -60)
 end
 
 function PlayState:update(dt)
@@ -25,11 +29,21 @@ function PlayState:update(dt)
 
     if not self.paused then
         self.paddle:update(dt)
+        self.ball:update(dt)
+        -- Check ball collision with paddle
+        if self.ball:collides(self.paddle) then
+            -- Move ball out of paddle
+            self.ball.y = self.ball.y - (self.ball.height / 2)
+            -- Reverse Y direction
+            self.ball.dy = -self.ball.dy
+            gSounds["paddle-hit"]:play()
+        end
     end
 end
 
 function PlayState:render()
     self.paddle:render()
+    self.ball:render()
 
     if self.paused then
         love.graphics.setFont(gFonts["large"])
