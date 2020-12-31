@@ -11,15 +11,15 @@
 Ball = Class{}
 
 function Ball:init(skin)
+    -- Balls have fixed width and height
+    self.width = 8
+    self.height = 8
     -- Set initial position to center of screen
     self.x = VIRTUAL_WIDTH / 2 - (self.width / 2)
     self.y = VIRTUAL_HEIGHT / 2 - (self.height / 2)
     -- Set initial velocity
     self.dx = 0
     self.dy = 0
-    -- Balls have fixed width and height
-    self.width = 8
-    self.height = 8
     -- Set the skin index for the ball quad
     self.skin = skin
 end
