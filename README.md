@@ -22,6 +22,15 @@ Breakout is an arcade game developed and published by Atari, Inc., and released 
 
 ![](./Game-States-Diagram.png)
 
+## Credit for music:
+
+- http://freesound.org/people/joshuaempyre/sounds/251461/
+- http://www.soundcloud.com/empyreanma
+
+## Credit for graphics:
+
+- https://opengameart.org/users/buch
+
 ## Libraries used (in `lib`)
 
 1. `class.lua` - Matthias Richter (vrld)
