@@ -69,12 +69,17 @@ function love.load()
         ["hearts"] = love.graphics.newImage("graphics/hearts.png"),
         ["particle"] = love.graphics.newImage("graphics/particle.png"),
     }
+    -- Quads generated from our textures
+    gQuadsTable = {
+        ["paddles"] = GenerateQuadPaddles(gGraphics["main"])
+    }
 
     states = {
         ["start"] = function() return StartState() end,
+        ["play"] = function() return PlayState() end,
     }
     gStateMachine = StateMachine(states)
-    gStateMachine:enter("start")
+    gStateMachine:change("start")
 
     -- Keep track of which keys have been pressed
     love.keyboard.keysPressed = {}
