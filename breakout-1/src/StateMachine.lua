@@ -40,7 +40,7 @@ function StateMachine:init(states)
     self.currentState = self.empty
 end
 
-function StateMachine:enter(stateName, enterParams)
+function StateMachine:change(stateName, enterParams)
     -- Ensure given state exists
     assert(self.states[stateName], "Invalid state name given: " .. stateName)
     self.currentState:exit()
