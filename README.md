@@ -21,3 +21,26 @@ Breakout is an arcade game developed and published by Atari, Inc., and released 
 ## Breakout State Flow
 
 ![](./Game-States-Diagram.png)
+
+## Credit for music:
+
+- http://freesound.org/people/joshuaempyre/sounds/251461/
+- http://www.soundcloud.com/empyreanma
+
+## Credit for graphics:
+
+- https://opengameart.org/users/buch
+
+## Libraries used (in `lib`)
+
+1. `class.lua` - Matthias Richter (vrld)
+
+   https://github.com/vrld/hump/blob/master/class.lua
+
+1. `push.lua` - Ulysse Ramage (Ulydev)
+
+   A simple resolution-handling library for LÖVE
+
+   `push` is a simple resolution-handling library that allows you to focus on making your game with a fixed resolution.
+
+   https://github.com/Ulydev/push
