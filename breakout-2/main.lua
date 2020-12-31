@@ -51,7 +51,7 @@ function love.load()
         ["score"] = love.audio.newSource("sounds/score.wav", "static"),
         ["select"] = love.audio.newSource("sounds/select.wav", "static"),
         ["victory"] = love.audio.newSource("sounds/victory.wav", "static"),
-        ["wall_hit.wav"] = love.audio.newSource("sounds/wall_hit.wav", "static"),
+        ["wall-hit"] = love.audio.newSource("sounds/wall_hit.wav", "static"),
 
         ["music"] = love.audio.newSource("sounds/music.wav", "stream"),
     }
