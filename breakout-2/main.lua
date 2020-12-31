@@ -71,7 +71,8 @@ function love.load()
     }
     -- Quads generated from our textures
     gQuadsTable = {
-        ["paddles"] = GenerateQuadPaddles(gGraphics["main"])
+        ["paddles"] = GenerateQuadPaddles(gGraphics["main"]),
+        ["balls"] = GenerateQuadBalls(gGraphics["main"]),
     }
 
     states = {

@@ -82,3 +82,35 @@ function GenerateQuadPaddles(atlas)
 
     return paddles
 end
+
+--[[
+    Function to obtain ball sprites from "breakout.png"
+    Each ball is 8px by 8px
+    The first row has 4 balls and the second row has 3 balls
+]]
+function GenerateQuadBalls(atlas)
+    local x = 96
+    local y = 48
+    local ballWidth = 8
+    local ballHeight = 8
+
+    balls = {}
+    index = 1
+
+    -- Get balls on first row
+    for i = 1, 4 do
+        balls[index] = love.graphics.newQuad(x, y, ballWidth, ballHeight, atlas:getDimensions())
+        index = index + 1
+        x = x + 8
+    end
+
+    -- Get balls on second row
+    x = 96
+    y = 56
+    for i = 1, 3 do
+        balls[index] = love.graphics.newQuad(x, y, ballWidth, ballHeight, atlas:getDimensions())
+        index = index + 1
+    end
+
+    return balls
+end
