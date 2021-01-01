@@ -73,6 +73,7 @@ function love.load()
     gQuadsTable = {
         ["paddles"] = GenerateQuadPaddles(gGraphics["main"]),
         ["balls"] = GenerateQuadBalls(gGraphics["main"]),
+        ["bricks"] = GenerateQuadBricks(gGraphics["main"]),
     }
 
     states = {

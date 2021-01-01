@@ -114,3 +114,18 @@ function GenerateQuadBalls(atlas)
 
     return balls
 end
+
+--[[
+    Generate quad bricks based on "breakout.png"
+    There are a total of 4 rows of bricks.
+    There are 6 bricks for row of the first 3 rows. 
+    The 4th row has 3 bricks.
+    Each brick is 32px x 16px (width x height).
+]]
+function GenerateQuadBricks(atlas)
+    local tileWidth = 32
+    local tileHeight = 16
+    local allQuads = generateQuads(atlas, tileWidth, tileHeight)
+
+    return table.slice(allQuads, 1, 21, 1)
+end
