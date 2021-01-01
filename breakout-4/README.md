@@ -1,13 +1,19 @@
---[[
-    PlayState Class
+# breakout-4: Collision update
 
-    Represents the gameplay. 
-    The player can control a paddle that can be moved left or right
-    using the left and right arrow keys
-]]
+This updates adds the following:
 
-PlayState = Class{__includes = BaseState}
+1. Paddle Collision update
+1. Brick Collision (Simple)
 
+## Paddle Collision update
+
+1. Take the difference between the ball's x and the paddle's center (diff = paddle.x + paddle.width / 2 - ball.x) and scale the ball's dx appropriately.
+1. If the ball is on the left side of the paddle's center, the difference will be positive. For this case, we scale the ball's dx by `ball.dx = ball.dx * -diff * dt` if the paddle is moving to the left (paddle.dx < 0) and the ball is moving to the left (ball.dx < 0)
+1. If the ball is on the right side of the paddle's center, the difference will be negative. For this case, we scale the ball's dx by `ball.dx = ball.dx * diff * dt` if the paddle is moving to the right (paddle.dx > 0) and the ball is moving to the right (ball.dx > 0)
+
+`PlayState.lua` changes:
+
+```Lua
 function PlayState:checkPaddleCollision(dt)
     -- Check ball collision with paddle
     if self.ball:collides(self.paddle) then
@@ -34,6 +40,37 @@ function PlayState:checkPaddleCollision(dt)
     end
 end
 
+function PlayState:update(dt)
+    -- ...
+    if not self.paused then
+        self.paddle:update(dt)
+        self.ball:update(dt)
+        self:checkPaddleCollision(dt)
+        self:checkBricksCollision(dt)
+    end
+    end
+end
+```
+
+## Brick Collision (Simple)
+
+Brick collision with the ball (top, left, right, down)
+
+If the left edge of ball is outside the left edge of the brick and ball dx is positive (going right), we have a **left side collision**
+
+If the right side of ball is outside the right edge of the brick and ball dx is negative (going left), we have a **right side collision**
+
+If the top edge of the ball is outside the top edge of the brick and ball dy is positive, we have a **top side collision**
+
+If the bottom edge of the ball is outside the bottom edge of the brick and ball dx is negative, we have a **bottom side collision**
+
+Collision Alternative way (better)
+
+1. https://github.com/noooway/love2d_arkanoid_tutorial
+
+`PlayState.lua` changes:
+
+```Lua
 function PlayState:checkBricksCollision(dt)
     -- Check ball collision with bricks
     for key, brick in pairs(self.bricks) do
@@ -60,7 +97,7 @@ function PlayState:checkBricksCollision(dt)
                 -- Top side collision
                 self.ball.dy = -self.ball.dy
                 self.ball.y = brick.y - self.ball.height
-            elseif (self.ball.y + self.ball.height) > brick.y + brick.height 
+            elseif (self.ball.y + self.ball.height) > brick.y + brick.height
                 and ballMovingUp then
                 -- Bottom side collision
                 self.ball.dy = -self.ball.dy
@@ -72,46 +109,4 @@ function PlayState:checkBricksCollision(dt)
         end
     end
 end
-
-function PlayState:init()
-    self.paused = false
-    self.paddle = Paddle()
-    self.bricks = LevelMaker.createMap()
-    self.ball = Ball(1)
-    -- Give ball random velocity
-    self.ball.dx = math.random(-200, 200)
-    self.ball.dy = math.random(-100, -80)
-end
-
-function PlayState:update(dt)
-    if love.keyboard.wasPressed("escape") then
-        love.event.quit()
-    end
-
-    if love.keyboard.wasPressed("space") then
-        gSounds["pause"]:play()
-        self.paused = not self.paused and true or false
-    end
-
-    if not self.paused then
-        self.paddle:update(dt)
-        self.ball:update(dt)
-        self:checkPaddleCollision(dt)
-        self:checkBricksCollision(dt)
-    end
-end
-
-function PlayState:render()
-    self.paddle:render()
-    self.ball:render()
-    for key, brick in pairs(self.bricks) do
-        brick:render()
-    end
-
-    if self.paused then
-        love.graphics.setFont(gFonts["large"])
-        love.graphics.printf("PAUSED", 0, VIRTUAL_HEIGHT / 2 - 40, VIRTUAL_WIDTH, "center")
-        love.graphics.setFont(gFonts["medium"])
-        love.graphics.printf("Press \"Spacebar\" to resume...", 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, "center")
-    end
-end
+```
