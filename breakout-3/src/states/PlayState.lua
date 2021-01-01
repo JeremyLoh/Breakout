@@ -11,6 +11,7 @@ PlayState = Class{__includes = BaseState}
 function PlayState:init()
     self.paused = false
     self.paddle = Paddle()
+    self.bricks = LevelMaker.createMap()
     self.ball = Ball(1)
     -- Give ball random velocity
     self.ball.dx = math.random(-200, 200)
@@ -38,12 +39,21 @@ function PlayState:update(dt)
             self.ball.dy = -self.ball.dy
             gSounds["paddle-hit"]:play()
         end
+        -- Check ball collision with bricks
+        for key, brick in pairs(self.bricks) do
+            if brick:isCurrentlyActive() and self.ball:collides(brick) then
+                brick:hit()
+            end
+        end
     end
 end
 
 function PlayState:render()
     self.paddle:render()
     self.ball:render()
+    for key, brick in pairs(self.bricks) do
+        brick:render()
+    end
 
     if self.paused then
         love.graphics.setFont(gFonts["large"])

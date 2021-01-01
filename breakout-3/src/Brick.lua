@@ -17,6 +17,10 @@ function Brick:hit()
     self.isActive = false
 end
 
+function Brick:isCurrentlyActive()
+    return self.isActive
+end
+
 function Brick:render()
     if self.isActive then
         local texture = gGraphics["main"]
