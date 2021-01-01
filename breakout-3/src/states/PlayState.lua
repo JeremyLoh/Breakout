@@ -57,8 +57,8 @@ function PlayState:render()
 
     if self.paused then
         love.graphics.setFont(gFonts["large"])
-        love.graphics.printf("PAUSED", 0, 20, VIRTUAL_WIDTH, "center")
+        love.graphics.printf("PAUSED", 0, VIRTUAL_HEIGHT / 2 - 40, VIRTUAL_WIDTH, "center")
         love.graphics.setFont(gFonts["medium"])
-        love.graphics.printf("Press \"Spacebar\" to resume...", 0, 50, VIRTUAL_WIDTH, "center")
+        love.graphics.printf("Press \"Spacebar\" to resume...", 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, "center")
     end
 end
