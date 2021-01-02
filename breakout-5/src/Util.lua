@@ -129,3 +129,35 @@ function GenerateQuadBricks(atlas)
 
     return table.slice(allQuads, 1, 21, 1)
 end
+
+--[[
+    Function to draw player lives
+]]
+function drawPlayerLives(lives)
+    local filledHeart = gQuadsTable["hearts"][1]
+    local emptyHeart = gQuadsTable["hearts"][2]
+    local texture = gGraphics["hearts"]
+    local heartWidth = texture:getWidth() / 2
+    local x = VIRTUAL_WIDTH - (MAX_LIVES * heartWidth)
+
+    for i = 1, lives do
+        love.graphics.draw(texture, filledHeart, x, 0)
+        x = x + heartWidth
+    end
+
+    for i = 1, MAX_LIVES - lives do
+        love.graphics.draw(texture, emptyHeart, x, 0)
+        x = x + heartWidth
+    end
+end
+
+--[[
+    Function to draw player score
+]]
+function drawPlayerScore(score)
+    local x = 16
+    local y = VIRTUAL_HEIGHT - 20
+    local limit = VIRTUAL_WIDTH / 10
+    love.graphics.setFont(gFonts["medium"])
+    love.graphics.printf(tostring(score), x, y, limit, "left")
+end
