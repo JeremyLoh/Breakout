@@ -73,3 +73,8 @@ function Ball:render()
     local quad = gQuadsTable["balls"][self.skin]
     love.graphics.draw(texture, quad, self.x, self.y)
 end
+
+function Ball:randomVelocity()
+    self.dx = math.random(-200, 200)
+    self.dy = math.random(-100, -80)
+end
