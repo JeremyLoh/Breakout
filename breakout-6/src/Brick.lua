@@ -1,8 +1,8 @@
 Brick = Class{}
 
-function Brick:init(x, y, color)
+function Brick:init(x, y, color, variation)
     -- Keep track of brick color and the variation of that color
-    self.variation = 3
+    self.variation = variation
     self.color = color
     self.x = x
     self.y = y

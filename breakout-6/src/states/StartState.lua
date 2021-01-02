@@ -30,7 +30,7 @@ function StartState:update(dt)
             -- Start game
             gStateMachine:change("serve", {
             ["paddle"] = Paddle(1),
-            ["bricks"] = LevelMaker.createMap(),
+            ["bricks"] = LevelMaker.createMap(1),
             ["ball"] = Ball(1),
             ["lives"] = MAX_LIVES,
             ["score"] = 0,
