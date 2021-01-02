@@ -59,6 +59,13 @@ function PlayState:updateLives()
     if self.ball.y >= VIRTUAL_HEIGHT then
         gSounds["hurt"]:play()
         self.lives = self.lives - 1
+        -- Check for game over
+        if self.lives == 0 then
+            gStateMachine:change("game-over", {
+                ["score"] = self.score,
+            })
+        end
+        
         self:resetBall()
         local serveStateParams = {
             ["paused"] = self.paused,
@@ -68,13 +75,6 @@ function PlayState:updateLives()
             ["score"] = self.score,
         }
         gStateMachine:change("serve", serveStateParams)
-    end
-
-    -- Check for game over
-    if self.lives == 0 then
-        gStateMachine:change("game-over", {
-            ["score"] = self.score,
-        })
     end
 end
 
