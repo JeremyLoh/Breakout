@@ -27,7 +27,14 @@ function StartState:update(dt)
     elseif love.keyboard.wasPressed("enter") or love.keyboard.wasPressed("return") then
         gSounds["confirm"]:play()
         if selectedOption == 1 then
-            gStateMachine:change("play")
+            -- Start game
+            gStateMachine:change("serve", {
+            ["paddle"] = Paddle(1),
+            ["bricks"] = LevelMaker.createMap(),
+            ["ball"] = Ball(1),
+            ["lives"] = MAX_LIVES,
+            ["score"] = 0,
+            })
         end
     elseif love.keyboard.wasPressed("escape") then
         love.event.quit()

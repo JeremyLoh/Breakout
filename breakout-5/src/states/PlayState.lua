@@ -8,6 +8,81 @@
 
 PlayState = Class{__includes = BaseState}
 
+function PlayState:enter(enterParams)
+    self.paused = false
+    self.paddle = enterParams["paddle"]
+    self.bricks = enterParams["bricks"]
+    self.lives = enterParams["lives"]
+    self.score = enterParams["score"]
+    self.ball = enterParams["ball"]
+    -- Give ball random velocity
+    self.ball:randomVelocity()
+end
+
+function PlayState:update(dt)
+    if love.keyboard.wasPressed("escape") then
+        love.event.quit()
+    end
+
+    if love.keyboard.wasPressed("space") then
+        gSounds["pause"]:play()
+        self.paused = not self.paused and true or false
+    end
+
+    if not self.paused then
+        self.paddle:update(dt)
+        self.ball:update(dt)
+        self:checkPaddleCollision(dt)
+        self:checkBricksCollision(dt)
+        self:updateLives()
+    end
+end
+
+function PlayState:render()
+    self.paddle:render()
+    self.ball:render()
+    for key, brick in pairs(self.bricks) do
+        brick:render()
+    end
+    drawPlayerLives(self.lives)
+    drawPlayerScore(self.score)
+
+    if self.paused then
+        love.graphics.setFont(gFonts["large"])
+        love.graphics.printf("PAUSED", 0, VIRTUAL_HEIGHT / 2 - 40, VIRTUAL_WIDTH, "center")
+        love.graphics.setFont(gFonts["medium"])
+        love.graphics.printf("Press \"Spacebar\" to resume...", 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, "center")
+    end
+end
+
+function PlayState:updateLives()
+    if self.ball.y >= VIRTUAL_HEIGHT then
+        gSounds["hurt"]:play()
+        self.lives = self.lives - 1
+        self:resetBall()
+        local serveStateParams = {
+            ["paused"] = self.paused,
+            ["paddle"] = self.paddle,
+            ["bricks"] = self.bricks,
+            ["lives"] = self.lives,
+            ["score"] = self.score,
+        }
+        gStateMachine:change("serve", serveStateParams)
+    end
+
+    -- Check for game over
+    if self.lives == 0 then
+        gStateMachine:change("game-over", {
+            ["score"] = self.score,
+        })
+    end
+end
+
+function PlayState:resetBall()
+    self.ball:reset()
+    self.ball:randomVelocity()
+end
+
 function PlayState:checkPaddleCollision(dt)
     -- Check ball collision with paddle
     if self.ball:collides(self.paddle) then
@@ -39,6 +114,7 @@ function PlayState:checkBricksCollision(dt)
     for key, brick in pairs(self.bricks) do
         if brick:isCurrentlyActive() and self.ball:collides(brick) then
             brick:hit()
+            self.score = self.score + 1
             local ballMovingRight = self.ball.dx > 0
             local ballMovingLeft = self.ball.dx < 0
             local ballMovingDown = self.ball.dy > 0
@@ -70,48 +146,5 @@ function PlayState:checkBricksCollision(dt)
             -- Slightly increase y velocity to speed up the game
             self.ball.dy = self.ball.dy * 1.02
         end
-    end
-end
-
-function PlayState:init()
-    self.paused = false
-    self.paddle = Paddle()
-    self.bricks = LevelMaker.createMap()
-    self.ball = Ball(1)
-    -- Give ball random velocity
-    self.ball.dx = math.random(-200, 200)
-    self.ball.dy = math.random(-100, -80)
-end
-
-function PlayState:update(dt)
-    if love.keyboard.wasPressed("escape") then
-        love.event.quit()
-    end
-
-    if love.keyboard.wasPressed("space") then
-        gSounds["pause"]:play()
-        self.paused = not self.paused and true or false
-    end
-
-    if not self.paused then
-        self.paddle:update(dt)
-        self.ball:update(dt)
-        self:checkPaddleCollision(dt)
-        self:checkBricksCollision(dt)
-    end
-end
-
-function PlayState:render()
-    self.paddle:render()
-    self.ball:render()
-    for key, brick in pairs(self.bricks) do
-        brick:render()
-    end
-
-    if self.paused then
-        love.graphics.setFont(gFonts["large"])
-        love.graphics.printf("PAUSED", 0, VIRTUAL_HEIGHT / 2 - 40, VIRTUAL_WIDTH, "center")
-        love.graphics.setFont(gFonts["medium"])
-        love.graphics.printf("Press \"Spacebar\" to resume...", 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, "center")
     end
 end

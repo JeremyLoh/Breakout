@@ -10,7 +10,7 @@ Paddle = Class{}
 --[[
     The paddle will initialize to the same spot every time
 ]]
-function Paddle:init()
+function Paddle:init(skin)
     -- Default paddle dimensions
     self.width = 64
     self.height = 16
@@ -19,7 +19,7 @@ function Paddle:init()
     -- Keep track of paddle velocity
     self.dx = 0
     -- Color of paddle (skin), used to offset gPaddleSkins
-    self.skin = 1
+    self.skin = skin
     -- Paddle size (small (1), medium (2), large (3), extra-large (4))
     self.size = 2
 end
