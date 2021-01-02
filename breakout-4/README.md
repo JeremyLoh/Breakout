@@ -48,7 +48,6 @@ function PlayState:update(dt)
         self:checkPaddleCollision(dt)
         self:checkBricksCollision(dt)
     end
-    end
 end
 ```
 
