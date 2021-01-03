@@ -76,5 +76,5 @@ end
 
 function Ball:randomVelocity()
     self.dx = math.random(-200, 200)
-    self.dy = math.random(-100, -80)
+    self.dy = math.random(-100, -90)
 end

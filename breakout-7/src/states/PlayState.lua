@@ -91,12 +91,12 @@ function PlayState:checkPaddleCollision(dt)
         -- Find difference between paddle's center and the ball
         local paddleCenter = self.paddle.x + (self.paddle.width / 2)
         local difference = paddleCenter - self.ball.x
-        local factor = 100
-        local startDx = 50
-        if difference > 0 and self.paddle.dx < 0 and self.ball.dx < 0 then
+        local factor = 200
+        local startDx = 60
+        if difference > 0 and self.paddle.dx < 0 then
             -- left side collision, paddle moving left
             self.ball.dx = -(startDx + (dt * difference * factor))
-        elseif difference < 0 and self.paddle.dx > 0 and self.ball.dx > 0 then
+        elseif difference < 0 and self.paddle.dx > 0 then
             -- right side collision, paddle moving right
             self.ball.dx = startDx + (dt * math.abs(difference) * factor)
         end
@@ -113,8 +113,8 @@ function PlayState:checkBricksCollision(dt)
     -- Check ball collision with bricks
     for key, brick in pairs(self.bricks) do
         if brick:isCurrentlyActive() and self.ball:collides(brick) then
+            self.score = self.score + (((brick.color - 1) * 15) + brick.variation * 100)
             brick:hit()
-            self.score = self.score + 1
             local ballMovingRight = self.ball.dx > 0
             local ballMovingLeft = self.ball.dx < 0
             local ballMovingDown = self.ball.dy > 0

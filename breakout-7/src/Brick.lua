@@ -14,7 +14,23 @@ end
 
 function Brick:hit()
     gSounds["brick-hit-1"]:play()
-    self.isActive = false
+    local lastColor = 5
+    local lastVariation = 1
+    local highestVariation = 4
+    if self.color == lastColor and self.variation == lastVariation then
+        self.isActive = false
+        gSounds["brick-hit-2"]:play()
+        return
+    end
+    
+    if self.variation == lastVariation then
+        -- Move to next color
+        self.color = self.color + 1
+        self.variation = highestVariation
+        gSounds["brick-hit-2"]:play()
+    else
+        self.variation = self.variation - 1
+    end
 end
 
 function Brick:isCurrentlyActive()
