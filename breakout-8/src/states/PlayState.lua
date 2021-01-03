@@ -35,6 +35,9 @@ function PlayState:update(dt)
         self:checkPaddleCollision(dt)
         self:checkBricksCollision(dt)
         self:updateLives()
+        for key, brick in pairs(self.bricks) do
+            brick:update(dt)
+        end
     end
 end
 
@@ -44,6 +47,10 @@ function PlayState:render()
     for key, brick in pairs(self.bricks) do
         brick:render()
     end
+    for key, brick in pairs(self.bricks) do
+        brick:renderParticles()
+    end
+    
     drawPlayerLives(self.lives)
     drawPlayerScore(self.score)
 
