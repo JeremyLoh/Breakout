@@ -14,6 +14,7 @@ function PlayState:enter(enterParams)
     self.bricks = enterParams["bricks"]
     self.lives = enterParams["lives"]
     self.score = enterParams["score"]
+    self.level = enterParams["level"]
     self.ball = enterParams["ball"]
     -- Give ball random velocity
     self.ball:randomVelocity()
@@ -34,6 +35,7 @@ function PlayState:update(dt)
         self.ball:update(dt)
         self:checkPaddleCollision(dt)
         self:checkBricksCollision(dt)
+        self:checkVictory()
         self:updateLives()
         for key, brick in pairs(self.bricks) do
             brick:update(dt)
@@ -62,6 +64,25 @@ function PlayState:render()
     end
 end
 
+function PlayState:checkVictory()
+    for key, brick in pairs(self.bricks) do
+        if brick:isCurrentlyActive() then
+            return
+        end
+    end
+    -- All bricks are cleared
+    gSounds["victory"]:stop()
+    gSounds["victory"]:play()
+    local victoryStateParams = {
+        ["paddle"] = self.paddle,
+        ["ball"] = self.ball,
+        ["lives"] = self.lives,
+        ["score"] = self.score,
+        ["level"] = self.level,
+    }
+    gStateMachine:change("victory", victoryStateParams)
+end
+
 function PlayState:updateLives()
     if self.ball.y >= VIRTUAL_HEIGHT then
         gSounds["hurt"]:play()
@@ -71,17 +92,18 @@ function PlayState:updateLives()
             gStateMachine:change("game-over", {
                 ["score"] = self.score,
             })
+        else
+            self:resetBall()
+            local serveStateParams = {
+                ["paused"] = self.paused,
+                ["paddle"] = self.paddle,
+                ["bricks"] = self.bricks,
+                ["lives"] = self.lives,
+                ["score"] = self.score,
+                ["level"] = self.level,
+            }
+            gStateMachine:change("serve", serveStateParams)
         end
-        
-        self:resetBall()
-        local serveStateParams = {
-            ["paused"] = self.paused,
-            ["paddle"] = self.paddle,
-            ["bricks"] = self.bricks,
-            ["lives"] = self.lives,
-            ["score"] = self.score,
-        }
-        gStateMachine:change("serve", serveStateParams)
     end
 end
 

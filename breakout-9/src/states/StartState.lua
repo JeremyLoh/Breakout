@@ -29,11 +29,12 @@ function StartState:update(dt)
         if selectedOption == 1 then
             -- Start game
             gStateMachine:change("serve", {
-            ["paddle"] = Paddle(1),
-            ["bricks"] = LevelMaker.createMap(1),
-            ["ball"] = Ball(1),
-            ["lives"] = MAX_LIVES,
-            ["score"] = 0,
+                ["paddle"] = Paddle(1),
+                ["bricks"] = LevelMaker.createMap(1),
+                ["ball"] = Ball(1),
+                ["lives"] = MAX_LIVES,
+                ["score"] = 0,
+                ["level"] = 1,
             })
         end
     elseif love.keyboard.wasPressed("escape") then

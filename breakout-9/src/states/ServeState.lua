@@ -5,6 +5,7 @@ function ServeState:enter(param)
     self.bricks = param["bricks"]
     self.score = param["score"]
     self.lives = param["lives"]
+    self.level = param["level"]
     -- Generate a new random ball variation
     self.ball = Ball(math.random(TOTAL_BALL_VARIATIONS))
 end
@@ -24,6 +25,7 @@ function ServeState:update(dt)
             ["bricks"] = self.bricks,
             ["score"] = self.score,
             ["lives"] = self.lives,
+            ["level"] = self.level,
         })
     elseif love.keyboard.wasPressed("escape") then
         love.event.quit()
@@ -41,5 +43,6 @@ function ServeState:render()
 
     -- Display instructions to serve ball
     love.graphics.setFont(gFonts["large"])
-    love.graphics.printf("Press \"Enter\" to serve!", 0, VIRTUAL_HEIGHT / 3, VIRTUAL_WIDTH, "center")
+    love.graphics.printf("Level " .. tostring(self.level), 0, VIRTUAL_HEIGHT / 3, VIRTUAL_WIDTH, "center")
+    love.graphics.printf("Press \"Enter\" to serve!", 0, VIRTUAL_HEIGHT / 3 + 50, VIRTUAL_WIDTH, "center")
 end
