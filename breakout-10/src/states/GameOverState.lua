@@ -1,12 +1,31 @@
 GameOverState = Class{__includes = BaseState}
 
+local INVALID_INDEX = -1
+
 function GameOverState:enter(params)
     self.score = params["score"]
 end
 
 function GameOverState:update(dt)
     if love.keyboard.wasPressed("enter") or love.keyboard.wasPressed("return") then
-        gStateMachine:change("start")
+        -- Check for highscore
+        local index = INVALID_INDEX
+        for i = 1, 10 do
+            if highscores[i]["score"] <= self.score then
+                index = i
+                break
+            end
+        end
+
+        if index ~= INVALID_INDEX then
+            gSounds["highscore"]:play()
+            gStateMachine:change("enter-highscores", {
+                ["score"] = self.score,
+                ["score-index"] = index,
+            })
+        else
+            gStateMachine:change("start")
+        end 
     elseif love.keyboard.wasPressed("escape") then
         love.event.quit()
     end

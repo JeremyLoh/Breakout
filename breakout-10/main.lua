@@ -87,6 +87,7 @@ function love.load()
         ["serve"] = function() return ServeState() end,
         ["game-over"] = function() return GameOverState() end,
         ["victory"] = function() return VictoryState() end,
+        ["enter-highscores"] = function() return EnterHighscoreState() end,
     }
     gStateMachine = StateMachine(states)
     gStateMachine:change("start")
