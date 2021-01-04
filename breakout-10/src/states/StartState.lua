@@ -36,6 +36,11 @@ function StartState:update(dt)
                 ["score"] = 0,
                 ["level"] = 1,
             })
+        elseif selectedOption == 2 then
+            -- Highscores
+            gStateMachine:change("highscores", {
+                ["highscores"] = highscores
+            })
         end
     elseif love.keyboard.wasPressed("escape") then
         love.event.quit()

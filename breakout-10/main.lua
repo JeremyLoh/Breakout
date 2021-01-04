@@ -32,6 +32,9 @@ function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
     math.randomseed(os.time())
 
+    -- Load highscores
+    highscores = getSavedHighscores()
+
     gFonts = {
         ["large"] = love.graphics.newFont("fonts/font.ttf", 32),
         ["medium"] = love.graphics.newFont("fonts/font.ttf", 16),
@@ -79,6 +82,7 @@ function love.load()
 
     states = {
         ["start"] = function() return StartState() end,
+        ["highscores"] = function() return HighscoreState() end,
         ["play"] = function() return PlayState() end,
         ["serve"] = function() return ServeState() end,
         ["game-over"] = function() return GameOverState() end,
@@ -145,4 +149,40 @@ function displayFPS()
     love.graphics.setFont(gFonts["small"])
     love.graphics.setColor(0, 255/255, 0, 255/255)
     love.graphics.print("FPS: " .. tostring(love.timer.getFPS()), 5, 5)
+end
+
+function getSavedHighscores()
+    local highscores = {}
+    for i = 1, 10 do
+        highscores[i] = {
+            ["name"] = nil,
+            ["score"] = nil,
+        }
+    end
+    love.filesystem.setIdentity("breakout")
+    local highscoreFileExists = love.filesystem.getInfo("highscores.lst", "file")
+    if highscoreFileExists then
+        local isName = true
+        local index = 1
+        for line in love.filesystem.lines("highscores.lst") do
+            if isName then
+                highscores[index]["name"] = string.sub(line, 1, 3)
+            else
+                highscores[index]["score"] = tonumber(line)
+                index = index + 1
+            end 
+            isName = not isName           
+        end
+    else
+        -- Create highscores file
+        local values = ""
+        for i = 1, 10 do
+            local name = "NIL\n"
+            local score = "0\n"
+            values = values .. name .. score
+        end
+        love.filesystem.write("highscores.lst", values)
+    end
+
+    return highscores
 end
