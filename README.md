@@ -2,6 +2,10 @@
 
 Breakout is an arcade game developed and published by Atari, Inc., and released on May 13, 1976. It was conceptualized by Nolan Bushnell and Steve Bristow, influenced by the seminal 1972 Atari arcade game Pong, and built by Steve Wozniak.
 
+Local game files for the game's highscore are kept in the folders shown in https://love2d.org/wiki/love.filesystem
+
+For example, in Windows, the files are created in `%appdata%\LOVE\` after the game is first launched.
+
 # Learning points
 
 1. Sprite Sheets
