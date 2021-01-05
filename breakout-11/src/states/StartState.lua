@@ -27,15 +27,8 @@ function StartState:update(dt)
     elseif love.keyboard.wasPressed("enter") or love.keyboard.wasPressed("return") then
         gSounds["confirm"]:play()
         if selectedOption == 1 then
-            -- Start game
-            gStateMachine:change("serve", {
-                ["paddle"] = Paddle(1),
-                ["bricks"] = LevelMaker.createMap(1),
-                ["ball"] = Ball(1),
-                ["lives"] = MAX_LIVES,
-                ["score"] = 0,
-                ["level"] = 1,
-            })
+            -- Start game, select paddle
+            gStateMachine:change("paddle-select")
         elseif selectedOption == 2 then
             -- Highscores
             gStateMachine:change("highscores", {

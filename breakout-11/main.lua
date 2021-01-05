@@ -78,6 +78,7 @@ function love.load()
         ["balls"] = GenerateQuadBalls(gGraphics["main"]),
         ["bricks"] = GenerateQuadBricks(gGraphics["main"]),
         ["hearts"] = generateQuads(gGraphics["hearts"], 16, 16),
+        ["arrows"] = generateQuads(gGraphics["arrows"], 16, 16),
     }
 
     states = {
@@ -88,6 +89,7 @@ function love.load()
         ["game-over"] = function() return GameOverState() end,
         ["victory"] = function() return VictoryState() end,
         ["enter-highscores"] = function() return EnterHighscoreState() end,
+        ["paddle-select"] = function() return PaddleSelectState() end,
     }
     gStateMachine = StateMachine(states)
     gStateMachine:change("start")
