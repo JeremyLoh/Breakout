@@ -26,7 +26,7 @@ function LevelMaker.createMap(level)
     -- Randomly generate rows and columns
     local maxColumns = (VIRTUAL_WIDTH / brickWidth) - 1
     maxColumns = maxColumns % 2 == 0 and maxColumns - 1 or maxColumns
-    local rows = math.random(3, 6)
+    local rows = math.random(level % 4)
     -- Columns need to be odd (for symmetry)
     local columns = math.random(7, maxColumns)
     columns = columns % 2 == 0 and (columns + 1) or columns
@@ -35,8 +35,8 @@ function LevelMaker.createMap(level)
         ((maxColumns - columns) * brickWidth) / 2 -- account for lesser columns situation
     
     -- Obtain max color and max variation of brick
-    local maxVariation = math.min(4, math.floor(level / 5))
-    local maxColor = math.min(5, level % 5 + 3)
+    local maxVariation = math.min(4, math.floor(level / 5) + 1)
+    local maxColor = level % 5 + 1
 
     local index = 1
 

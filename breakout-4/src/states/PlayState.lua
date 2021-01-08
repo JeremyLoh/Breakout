@@ -16,7 +16,7 @@ function PlayState:checkPaddleCollision(dt)
         -- Find difference between paddle's center and the ball
         local paddleCenter = self.paddle.x + (self.paddle.width / 2)
         local difference = paddleCenter - self.ball.x
-        local factor = 100
+        local factor = 40
         local startDx = 50
         if difference > 0 and self.paddle.dx < 0 and self.ball.dx < 0 then
             -- left side collision, paddle moving left

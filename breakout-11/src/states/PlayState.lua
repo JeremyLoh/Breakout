@@ -173,7 +173,11 @@ function PlayState:checkBricksCollision(dt)
             end
 
             -- Slightly increase y velocity to speed up the game
-            self.ball.dy = self.ball.dy * 1.02
+            if self.ball.dy < 0 then
+                self.ball.dy = math.min(-MAX_BALL_SPEED, self.ball.dy * 1.01)
+            else
+                self.ball.dy = math.min(MAX_BALL_SPEED, self.ball.dy * 1.01)
+            end
         end
     end
 end
