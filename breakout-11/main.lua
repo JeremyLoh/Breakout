@@ -162,6 +162,10 @@ function getSavedHighscores()
             ["score"] = nil,
         }
     end
+
+    if love.filesystem.getInfo("breakout", "directory") == nil then 
+        love.filesystem.createDirectory("breakout") 
+    end
     love.filesystem.setIdentity("breakout")
     local highscoreFileExists = love.filesystem.getInfo("highscores.lst", "file")
     if highscoreFileExists then

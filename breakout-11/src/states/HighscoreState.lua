@@ -21,7 +21,7 @@ function HighscoreState:render()
     for i = 1, 10 do
         local name = self.highscores[i]["name"]
         local score = self.highscores[i]["score"]
-        if string.upper(name) == "NIL" then
+        if name == nil or string.upper(name) == "NIL" then
             name = "---"
             score = "---"
         end
