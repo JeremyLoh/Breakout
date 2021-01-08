@@ -11,7 +11,7 @@ function GameOverState:update(dt)
         -- Check for highscore
         local index = INVALID_INDEX
         for i = 1, 10 do
-            if highscores[i]["score"] <= self.score then
+            if  highscores[i]["score"] == nil or highscores[i]["score"] <= self.score then
                 index = i
                 break
             end
