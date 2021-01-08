@@ -68,7 +68,7 @@ function Brick:hit()
     gSounds["brick-hit-1"]:stop()
     gSounds["brick-hit-1"]:play()
 
-    local lastColor = 5
+    local lastColor = 1
     local lastVariation = 1
     local highestVariation = 4
     if self.color == lastColor and self.variation == lastVariation then
@@ -79,9 +79,9 @@ function Brick:hit()
     end
     
     if self.variation == lastVariation then
-        -- Move to next color
-        self.color = self.color + 1
-        self.variation = highestVariation
+        -- Move to next color, random variation
+        self.color = self.color - 1
+        self.variation = math.random(lastVariation, highestVariation)
         gSounds["brick-hit-2"]:stop()
         gSounds["brick-hit-2"]:play()
     else
