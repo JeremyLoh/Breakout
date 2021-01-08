@@ -141,7 +141,7 @@ function love.draw()
     )
     gStateMachine:render()
     -- Display FPS for debugging; comment out for game release
-    displayFPS()
+    -- displayFPS()
     push:finish()
 end
 
@@ -163,9 +163,6 @@ function getSavedHighscores()
         }
     end
 
-    if love.filesystem.getInfo("breakout", "directory") == nil then 
-        love.filesystem.createDirectory("breakout") 
-    end
     love.filesystem.setIdentity("breakout")
     local highscoreFileExists = love.filesystem.getInfo("highscores.lst", "file")
     if highscoreFileExists then
