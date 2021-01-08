@@ -4,7 +4,26 @@ Breakout is an arcade game developed and published by Atari, Inc., and released 
 
 Local game files for the game's highscore are kept in the folders shown in https://love2d.org/wiki/love.filesystem
 
-For example, in Windows, the files are created in `%appdata%\LOVE\` after the game is first launched.
+For example, in Windows, the files are created in `%appdata%\breakout\` after the game is first launched.
+
+To open the AppData folder on Windows 10:
+
+    Open File Explorer/Windows Explorer.
+    Type %AppData% into the address bar and hit enter.
+
+# Downloading the Game
+
+You can download the latest release of the game by following the instructions posted at https://github.com/JeremyLoh/Breakout/releases
+
+# Game Screenshots
+
+![main menu screenshot](./game-screenshots/main-menu.png)
+![paddle select screen](./game-screenshots/paddle-select.png)
+![player serve ball state](./game-screenshots/game-serve-state.png)
+![brick collision](./game-screenshots/brick-hit.png)
+![game over screen](./game-screenshots/game-over.png)
+![enter highscore details screen](./game-screenshots/enter-highscore.png)
+![highscores list](./game-screenshots/highscores.png)
 
 # Learning points
 
